@@ -1,7 +1,5 @@
 <#include "header.ftl">
 
-	<#include "menu.ftl">
-
 	<div class="page-header">
 		<h1><#escape x as x?xml>${content.title}</#escape></h1>
 	</div>
@@ -14,8 +12,8 @@
 	<div id="disqus_thread"></div>
 <script>
     var disqus_config = function () {
-        this.page.url = ${config.site_host}/${content.uri};
-        this.page.identifier = ${content.uri};
+        this.page.url = '${config.site_host}/${content.uri}';
+        this.page.identifier = '${content.uri}';
     };
     (function() {
         var d = document, s = d.createElement('script');

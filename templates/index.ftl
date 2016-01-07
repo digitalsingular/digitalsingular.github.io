@@ -1,20 +1,23 @@
 <#include "header.ftl">
-
-	<#include "menu.ftl">
-
-	<div class="page-header">
-		<h1>Blog</h1>
-	</div>
 	<#list posts as post>
   		<#if (post.status == "published")>
-  			<a href="${post.uri}"><h1><#escape x as x?xml>${post.title}</#escape></h1></a>
-  			<p>${post.date?string("dd MMMM yyyy")}</p>
-  			<p>${post.body}</p>
+			<div class="card">
+				<div class="card-content">
+	  			<span class="card-title"><a href="${post.uri}"><h4><#escape x as x?xml>${post.title}</#escape></h4></a></span>
+					<div class="section">
+	  			<p>${post.date?string("dd MMMM yyyy")}</p>
+					</div>
+					<div class="section">
+	  			<p>${post.body}</p>
+					</div>
+				</div>
+			</div>
   		</#if>
   	</#list>
-
-	<hr />
-
-	<p>Older posts are available in the <a href="${content.rootpath}${config.archive_file}">archive</a>.</p>
-
+	<div class="card">
+		<div class="card-content">
+			<span class="card-title"><a href="${content.rootpath}${config.archive_file}">Archivo</a></span>
+			<p>Consulta todos los posts</p>
+		</div>
+	</div>
 <#include "footer.ftl">
