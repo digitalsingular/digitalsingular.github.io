@@ -11,6 +11,9 @@
 	  			<p class="flow-text">${post.body}</p>
 					</div>
 				</div>
+				<div class="card-action">
+					<a href="${post.uri}"><#escape x as x?xml>Leer</#escape></a>
+				</div>
 			</div>
   		</#if>
   	</#list>
