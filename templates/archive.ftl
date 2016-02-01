@@ -1,25 +1,30 @@
 <#include "header.ftl">
 
-	<div class="page-header">
-		<h1>Blog Archive</h1>
-	</div>
+	<h2 class="light-blue-text text-darken-1">
+		Archivo
+	</h2>
 
-	<!--<ul>-->
-		<#list published_posts as post>
+	<#list published_posts as post>
 		<#if (last_month)??>
 			<#if post.date?string("MMMM yyyy") != last_month>
-				</ul>
-				<h4>${post.date?string("MMMM yyyy")}</h4>
-				<ul>
+					</div>
+				</div>
+				<div class="card hoverable">
+					<div class="card-content">
+						<span class="card-title">
+							<h4>${post.date?string("MMMM yyyy")}</h4>
+						</span>
 			</#if>
 		<#else>
-			<h4>${post.date?string("MMMM yyyy")}</h4>
-			<ul>
+		<div class="card hoverable">
+			<div class="card-content">
+				<span class="card-title">
+					<h4>${post.date?string("MMMM yyyy")}</h4>
+				</span>
 		</#if>
 
-		<li>${post.date?string("dd")} - <a href="${content.rootpath}${post.uri}"><#escape x as x?xml>${post.title}</#escape></a></li>
+		${post.date?string("dd")} - <a href="${content.rootpath}${post.uri}"><#escape x as x?xml>${post.title}</#escape></a><br/>
 		<#assign last_month = post.date?string("MMMM yyyy")>
-		</#list>
-	</ul>
-
+	</#list>
+	</div>
 <#include "footer.ftl">

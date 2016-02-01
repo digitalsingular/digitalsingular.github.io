@@ -1,13 +1,17 @@
 <#include "header.ftl">
 
-	<div class="page-header">
-		<h1><#escape x as x?xml>${content.title}</#escape></h1>
+	<div class="card hoverable">
+		<div class="card-content">
+			<span class="card-title">
+				<h4 class="light-blue-text text-darken-1"><#escape x as x?xml>${content.title}</#escape></h4>
+			</span>
+			<div class="section">
+				<p>${content.date?string("dd MMMM yyyy")}</p>
+			</div>
+			<div class="section">
+				<p>${content.body}</p>
+			</div>
+		</div>
 	</div>
-
-	<p><em>${content.date?string("dd MMMM yyyy")}</em></p>
-
-	<p>${content.body}</p>
-
-	<hr />
 
 <#include "footer.ftl">

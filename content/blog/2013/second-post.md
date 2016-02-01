@@ -1,7 +1,7 @@
 title=Second Post
 date=2013-08-25
 type=post
-tags=blog
+tags=example
 status=published
 ~~~~~~
 
