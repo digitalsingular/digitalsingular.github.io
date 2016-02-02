@@ -4,7 +4,7 @@
 
     <footer>
       <div class="container">
-        <p >&copy; 2016 | Mixed with <a href="http://materializecss.com/">Materialize v.0.97.5</a> | Baked with <a href="http://jbake.org">JBake ${version}</a></p>
+        <p class="center-align">&copy; 2016 | Mixed with <a href="http://materializecss.com/">Materialize v.0.97.5</a> | Baked with <a href="http://jbake.org">JBake ${version}</a></p>
       </div>
     </footer>
 
