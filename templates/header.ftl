@@ -16,6 +16,7 @@
     <!--[if lt IE 9]>
       <script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>js/html5shiv.min.js"></script>
     <![endif]-->
+    <link rel="stylesheet" href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/aguasnegras.css"/>
     <link rel="shortcut icon" href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>favicon.ico">
   </head>
   <body>
