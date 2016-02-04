@@ -1,5 +1,5 @@
 <#include "header.ftl">
-
+<div class="col s12">
 	<div class="card hoverable">
 		<div class="card-content">
 			<span class="card-title">

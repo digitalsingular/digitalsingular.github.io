@@ -25,16 +25,3 @@
     </header>
     <div class="container">
       <div class="row">
-        <div class="col s2 hide-on-small-only">
-          <div class="card hoverable">
-        		<div class="card-content">
-        			<span class="card-title"><h5 class="light-blue-text text-darken-1">Tags</h5></span>
-              <ul>
-            <#list alltags as tag>
-              <li><a href="${content.rootpath}tags/${tag}.html">${tag}</a></li>
-            </#list>
-          </ul>
-          </div>
-        </div>
-        </div>
-        <div class="col s12 m10">

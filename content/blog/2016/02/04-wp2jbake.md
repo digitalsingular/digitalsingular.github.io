@@ -4,13 +4,8 @@ type=post
 tags=Java, JBake, Wordpress
 status=published
 ~~~~~~
-En la migraci&oacute;n del blog a GitHub Pages uno de los objetivos era no perder contenido, por lo que una vez puesta en pie toda la infraestructura,
-toca migrar los posts (mucho me temo que los comentarios si se van a perder...). Soluci&oacute;n: Hacer un peque&ntilde;o programa en Java (casi que dir&iacute;a script)
-que realice autom&aacute;ticamente esta conversi&oacute;n, adem&aacute;s voy a seguir TDD para "mantenerme en forma".
-En un principio lo voy a plantear como una mera conversi&oacute;n de formatos, como formato inicial tengo el que devuelve Wordpress para la 
-exportaci&oacute;n: [Wordpress Extended RSS](http://devtidbits.com/2011/03/16/the-wordpress-extended-rss-wxr-exportimport-xml-document-format-decoded-and-explained/)
-y como formato final quiero un archivo en el formato espec&iacute;fico de JBake, que no deja de ser [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
-con unas cabeceras particulares:
+En la migraci&oacute;n del blog a GitHub Pages uno de los objetivos era no perder contenido, por lo que una vez puesta en pie toda la infraestructura, toca migrar los posts (mucho me temo que los comentarios si se van a perder...). Soluci&oacute;n: Hacer un peque&ntilde;o programa en Java (casi que dir&iacute;a script) que realice autom&aacute;ticamente esta conversi&oacute;n, adem&aacute;s voy a seguir TDD para "mantenerme en forma".
+En un principio lo voy a plantear como una mera conversi&oacute;n de formatos, como formato inicial tengo el que devuelve Wordpress para la exportaci&oacute;n: [Wordpress Extended RSS](http://devtidbits.com/2011/03/16/the-wordpress-extended-rss-wxr-exportimport-xml-document-format-decoded-and-explained/) y como formato final quiero un archivo en el formato espec&iacute;fico de JBake, que no deja de ser [Markdown](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) con unas cabeceras (metadata) particulares:
 
 1. title: El t&iacute;tulo del post
 2. date: La fecha del post
@@ -22,16 +17,13 @@ El WXR es un solo archivo con una serie de elementos item que corresponde cada u
 
 1. title: casa con la cabecera title que quiero
 2. pubdate: casa con la cabecera date
-3. category: Las categor&iacute;as se dividen en dominios que puede ser category (bien Wordpress, bien) o post_tag, en concreto me interesan solo aquellas
-de tipo post_tag y su contenido, es decir tendr&eacute; que concatener el contenido de todas las categor&iacute;as de tipo post_tag.
-4. content: Este es el contenido el post en s&iacute;, como se puede ver viene en HTML tal cual dentro de un CDATA, esto me permite aprovechar que con Markdown
-puedo utilizar el HTML inline as&iacute; que en un principio lo voy a volcar tal cual, aunque preveo ciertos problemas con las etiquetas de c&oacute;digo...
+3. category: Las categor&iacute;as se dividen en dominios que puede ser category (bien Wordpress, bien) o post_tag, en concreto me interesan solo aquellas de tipo post_tag y su contenido, es decir tendr&eacute; que concatener el contenido de todas las categor&iacute;as de tipo post_tag.
+4. content: Este es el contenido el post en s&iacute;, como se puede ver viene en HTML tal cual dentro de un CDATA, esto me permite aprovechar que con Markdown puedo utilizar el HTML inline as&iacute; que en un principio lo voy a volcar tal cual, aunque preveo ciertos problemas con las etiquetas de c&oacute;digo...
 
-Por &uacute;ltimo, por cada item quiero generar un archivo con el nombre dd-title.md (donde dd es el d&iacute;a de la fecha) dentro de una carpeta mm (mes) dentro
-de una carpeta aaaa (a&ntilde;o...).
+Por &uacute;ltimo, por cada item quiero generar un archivo con el nombre dd-title.md (donde dd es el d&iacute;a de la fecha) dentro de una carpeta mm (mes) dentro de una carpeta aaaa (a&ntilde;o...).
 
 Pues con esto, empezamos!! Primero: crear el projecto en Intellij y con Maven, creo el repositorio en [GitHub](https://github.com/agustinventura/wp2jbake) y lo a&ntilde;ado.
-Por &uacute;ltimo, actualizo el .gitignore, hago el commit inicial y cambio a la rama development.
+A continuaci&oacute;n, actualizo el .gitignore, hago el commit inicial y cambio a la rama development.
 
 El comienzo es un no brainer, necesito un main que arranque la aplicaci&oacute;n como tal y que recibir&aacute; como par&aacute;metros:
 
@@ -78,8 +70,7 @@ public Wp2JBake(String origin, String destination) {
 }
 ```
 
-Pero... un segundo, &iquest;me d&aacute; igual la IllegalArgumentException que se lanza? No, en cada caso quiero verificar que se esta lanzando la que se debe, 
-refactorizo las pruebas, ahora voy a utilizar un @Rule de JUnit para comprobar que se lanza la excepci&oacute;n y el mensaje de error:
+Pero... un segundo, &iquest;me d&aacute; igual la IllegalArgumentException que se lanza? No, en cada caso quiero verificar que se esta lanzando la que se debe, refactorizo las pruebas, ahora voy a utilizar un @Rule de JUnit para comprobar que se lanza la excepci&oacute;n y el mensaje de error:
 
 ```prettyprint
 @Rule
@@ -125,7 +116,6 @@ public void buildWithEmptyDestination() {
     thrown.expect(IllegalArgumentException.class);
     thrown.expectMessage("Destination");
     sut = new Wp2JBake("foo", "");
-
 }
 ```
 
@@ -171,19 +161,16 @@ private boolean existsOrigin(String origin) {
 }
 ```
 
-Esta implementaci&oacute;n hace saltar las pruebas de origen inv&aacute;lido, claro como para "callar" los tests estoy pasando como primer par&aacute;metro una cadena
-cualquiera, ahora falla porque no existe el par&aacute;metro foo.
+Esta implementaci&oacute;n hace saltar las pruebas de origen inv&aacute;lido, claro como para "callar" los tests estoy pasando como primer par&aacute;metro una cadena cualquiera, ahora falla porque no existe el par&aacute;metro foo.
 Aqu&iacute; hay dos opciones:
 
 1. Pasar un archivo que si exista.
 2. Cambiar la implementaci&oacute;n para que primero compruebe que la cadena es v&aacute;lida en los dos casos y despu&eacute;s que compruebe si el archivo es v&aacute;lido.
 
-El problema de 2 es que tendr&iacute;a que lanzar la misma excepci&oacute;n dos veces mientras que el de 1 es que se parecer&iacute;a m&aacute;s a un test de integraci&oacute;n que
-a una prueba unitaria en s&iacute;. Para mi gusto esta es una de las zonas grises en TDD, porque, &iquest;ahora qu&eacute; hago?&iquest;Creo un mock del SUT? No lo veo claro,
+El problema de 2 es que tendr&iacute;a que lanzar la misma excepci&oacute;n dos veces mientras que el de 1 es que se parecer&iacute;a m&aacute;s a un test de integraci&oacute;n que a una prueba unitaria en s&iacute;. Para mi gusto esta es una de las zonas grises en TDD, porque, &iquest;ahora qu&eacute; hago?&iquest;Creo un mock del SUT? No lo veo claro,
 as&iacute; que tratar&eacute; de tirar por el camino del medio y pasar una ruta de archivo que sepa que siempre existe, por ejemplo, el pom.xml.
 
-Ahora podr&iacute;a seguir comprobando que el destino no sea inv&aacute;lido, pero... &iquest;puede serlo? Al ser un directorio, si no existe, deber&iacute;a crearlo y si existe,
-no hacer nada. En todo caso la comprobaci&oacute;n deber&iacute;a ser si se puede crear el directorio y si se puede escribir en &eacute;l.
+Ahora podr&iacute;a seguir comprobando que el destino no sea inv&aacute;lido, pero... &iquest;puede serlo? Al ser un directorio, si no existe, deber&iacute;a crearlo y si existe, no hacer nada. En todo caso la comprobaci&oacute;n deber&iacute;a ser si se puede crear el directorio y si se puede escribir en &eacute;l.
 
 De aqu&iacute; saco estas dos pruebas:
 
@@ -250,5 +237,4 @@ public void buildWithValidParameters() {
 }
 ```
 
-Con esto puedo empezar a refactorizar y a remplatearme las cosas. La verdad que Wp2JBake empieza a tener un tama&ntilde;o considerable teniendo en cuenta que tan s&oacute;lo tiene como API un constructor. La verdad que las comprobaciones que estoy haciendo sobre los par&aacute;metros no me convencen, me dan
-la impresi&oacute;n de que estoy violando el Single Responsability, por otra parte ser&iacute;a un poco artificial crear una clase de validadores &uacute;nicamente.
+Con esto puedo empezar a refactorizar y a remplatearme las cosas. La verdad que Wp2JBake empieza a tener un tama&ntilde;o considerable teniendo en cuenta que tan s&oacute;lo tiene como API un constructor. La verdad que las comprobaciones que estoy haciendo sobre los par&aacute;metros no me convencen, me dan la impresi&oacute;n de que estoy violando el Single Responsability, por otra parte ser&iacute;a un poco artificial crear una clase de validadores &uacute;nicamente.

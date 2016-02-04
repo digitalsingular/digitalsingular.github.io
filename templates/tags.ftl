@@ -1,5 +1,5 @@
 <#include "header.ftl">
-
+<div class="col s12">
 	<h2 class="light-blue-text text-darken-1">
 		Tag: ${tag}
 	</h2>
