@@ -1,4 +1,4 @@
-title=Wordpress to JBake
+title=Wordpress to JBake - Inicio
 date=2016-02-04
 type=post
 tags=Java, JBake, Wordpress
