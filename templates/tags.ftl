@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row">
         <div class="col s12">
-	        <h2 class="light-blue-text text-darken-1">Tag: ${tag}</h2>
+	        <h2 class="light-blue-text text-darken-1">${tag}</h2>
 
 		    <#list tag_posts as post>
 		        <#if (last_month)??>

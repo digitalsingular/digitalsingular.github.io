@@ -4,10 +4,10 @@
 <div class="col s12">
 			<h4 class="light-blue-text text-darken-1"><#escape x as x?xml>${content.title}</#escape></h4>
 			<div class="section">
-				<p>${content.date?string("dd MMMM yyyy")}</p>
+				${content.date?string("dd MMMM yyyy")}
 			</div>
 			<div class="section">
-				<p>${content.body}</p>
+				${content.body}
 			</div>
 </div>
 </div>

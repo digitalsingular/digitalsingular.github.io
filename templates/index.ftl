@@ -9,20 +9,20 @@
 				        <div class="card-content">
 	          			<span class="card-title"><a href="${post.uri}"><h4><#escape x as x?xml>${post.title}</#escape></h4></a></span>
 					        <div class="section">
-	          			        <p>${post.date?string("dd MMMM yyyy")}</p>
+	          			        ${post.date?string("dd MMMM yyyy")}
 					        </div>
 					        <div class="section">
 					            <#if post.body?length lt 1000>
     					            <p class="flow-text">${post.body}</p>
 					            <#else>
-					                <#assign excerpt = post.body?substring(0,1000)>
-					                <#assign endOfParagraph = excerpt?last_index_of("</p>")>
+					                <#assign endOfParagraph = post.body?index_of("</p>")>
+                          <#assign excerpt = post.body?substring(0,endOfParagraph)>
 	          			            <p class="flow-text">
-	          			                ${post.body?substring(0,endOfParagraph)}
+	          			                ${excerpt}
 	          			                <br/>
 	          			                ...
 	          			            </p>
-	          			        </#if>
+	          			    </#if>
 					        </div>
 				        </div>
 				        <div class="card-action">
