@@ -10,6 +10,8 @@
     <meta name="generator" content="JBake">
     <!--Import Google Icon Font-->
      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <!-- Import Font Awesome Icons-->
+     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -23,5 +25,3 @@
     <header>
       	<#include "menu.ftl">
     </header>
-    <div class="container">
-      <div class="row">
