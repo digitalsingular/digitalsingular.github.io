@@ -1,5 +1,7 @@
 <#include "header.ftl">
-
+<div class="container">
+<div class="row">
+<div class="col s12">
 	<h2 class="light-blue-text text-darken-1">
 		Archivo
 	</h2>
@@ -27,4 +29,8 @@
 		<#assign last_month = post.date?string("MMMM yyyy")>
 	</#list>
 	</div>
+</div>
+</div>
+</div>
+</div>
 <#include "footer.ftl">

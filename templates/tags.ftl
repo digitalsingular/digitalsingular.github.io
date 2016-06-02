@@ -1,31 +1,34 @@
 <#include "header.ftl">
-<div class="col s12">
-	<h2 class="light-blue-text text-darken-1">
-		Tag: ${tag}
-	</h2>
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+	        <h2 class="light-blue-text text-darken-1">Tag: ${tag}</h2>
 
-		<#list tag_posts as post>
-		<#if (last_month)??>
-			<#if post.date?string("MMMM yyyy") != last_month>
-			</div>
+		    <#list tag_posts as post>
+		        <#if (last_month)??>
+			        <#if post.date?string("MMMM yyyy") != last_month>
 		</div>
-		<div class="card hoverable">
-			<div class="card-content">
-				<span class="card-title">
-					<h4>${post.date?string("MMMM yyyy")}</h4>
-				</span>
-			</#if>
-		<#else>
-		<div class="card hoverable">
-			<div class="card-content">
-				<span class="card-title">
-					<h4>${post.date?string("MMMM yyyy")}</h4>
-				</span>
-		</#if>
-
-		${post.date?string("dd")} - <a href="${content.rootpath}${post.uri}">${post.title}</a><br/>
-		<#assign last_month = post.date?string("MMMM yyyy")>
-		</#list>
 	</div>
-
+	<div class="card hoverable">
+	    <div class="card-content">
+		    <span class="card-title">
+			    <h4>${post.date?string("MMMM yyyy")}</h4>
+			</span>
+			    </#if>
+		        <#else>
+	<div class="card hoverable">
+		<div class="card-content">
+			<span class="card-title">
+				<h4>${post.date?string("MMMM yyyy")}</h4>
+			</span>
+		        </#if>
+            ${post.date?string("dd")} - <a href="${content.rootpath}${post.uri}">${post.title}</a><br/>
+		    <#assign last_month = post.date?string("MMMM yyyy")>
+		    </#list>
+	    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
 <#include "footer.ftl">
