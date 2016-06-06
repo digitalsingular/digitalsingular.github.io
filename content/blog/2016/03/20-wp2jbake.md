@@ -326,3 +326,406 @@ public Set<File> generateJBakeMarkdown() {
     return new HashSet<File>();
 }
 ```
+Desafortunadamente, el tema es más complejo de lo que parecía. Dado que StAX solo lee en un sentido (palante), de poco me sirve la API de streams de Java 8, ya que tengo que ir tomando decisiones en función del elemento que llegue, por ejemplo, un elemento _title_ se debe ignorar salvo que previamente se haya recibido un _item_.
+No digo que no sea posible hacerlo con streams, solo que después de muchos relíos es más sencillo hacerlo con dos while:
+
+1. El primer while que itera sobre todos los elementos proporcionados por StAX.
+2. El segundo while empieza cuando se detecta un _item_ y termina cuando se cierra el _item_, leyendo por tanto un post completo.
+
+Con esto en mente es bastante fácil:
+
+```prettyprint
+public Set<File> generateJBakeMarkdown() {
+        HashSet<File> exportResult = new HashSet<>();
+        XMLEventReader eventReader = getEventReader();
+        try {
+            exportPosts(exportResult, eventReader);
+        } catch (XMLStreamException e) {
+            throw new IllegalStateException("Error reading XML " + origin + ": " + e.getMessage());
+        }
+        return exportResult;
+    }
+
+    private void exportPosts(HashSet<File> exportResult, XMLEventReader eventReader) throws XMLStreamException {
+        Post post = null;
+        while (eventReader.hasNext()) {
+                XMLEvent event = eventReader.nextEvent();
+                if (isPostStart(event)) {
+                    post = exportPost(exportResult, eventReader, post);
+                }
+        }
+    }
+
+    private Post exportPost(HashSet<File> exportResult, XMLEventReader eventReader, Post post) throws XMLStreamException {
+        if (post != null) {
+            exportResult.add(mdWriter.write(post));
+        }
+        post = readPost(eventReader);
+        return post;
+    }
+
+    private Post readPost(XMLEventReader eventReader) throws XMLStreamException {
+        Post exportedPost = new Post();
+        boolean postRead = false;
+            while (!postRead && eventReader.hasNext()) {
+                XMLEvent event = eventReader.nextEvent();
+                if (event.isStartElement()) {
+                    exportedPost = loadPostFromEvent(event, eventReader, exportedPost);
+                } else if (isPostEnd(event)) {
+                    postRead = true;
+                }
+            }
+        return exportedPost;
+    }
+
+    private boolean isPostEnd(XMLEvent event) {
+        return event.isEndElement() && "item".equals(event.asEndElement().getName().getPrefix() + event.asEndElement().getName().getLocalPart());
+    }
+
+    private boolean isPostStart(XMLEvent event) {
+        return event.isStartElement() && "item".equals(getEventFullName(event));
+    }
+
+    private Post loadPostFromEvent(XMLEvent event, XMLEventReader eventReader, Post post) {
+        String name = getEventFullName(event);
+        try {
+            switch (name) {
+                case "title":
+                    post = loadTitle(eventReader, post);
+                    break;
+                case "pubDate":
+                    post = loadPublishingDate(eventReader, post);
+                    break;
+                case "category":
+                    if (isTag(event)) {
+                        post = loadCategory(eventReader, event, post);
+                    }
+                    break;
+                case "contentencoded":
+                    post = loadContent(eventReader, post);
+                    break;
+                default:
+                    break;
+            }
+        } catch (XMLStreamException e) {
+            throw new IllegalStateException("Error parsing " + name + ": " + e.getMessage());
+        }
+        return post;
+    }
+
+    private Post loadContent(XMLEventReader eventReader, Post post) throws XMLStreamException {
+            return post.withContent(eventReader.nextEvent().asCharacters().getData());
+    }
+
+    private Post loadCategory(XMLEventReader eventReader, XMLEvent event, Post post) throws XMLStreamException {
+            return post.withTag(eventReader.nextEvent().asCharacters().getData());
+    }
+
+    private Post loadPublishingDate(XMLEventReader eventReader, Post post) throws XMLStreamException {
+            return post.withPublishingDate(parsePubDate(eventReader));
+    }
+
+    private Post loadTitle(XMLEventReader eventReader, Post post) throws XMLStreamException {
+            return post.withTitle(eventReader.nextEvent().asCharacters().getData());
+    }
+
+    private String getEventFullName(XMLEvent event) {
+        return event.asStartElement().getName().getPrefix() + event.asStartElement().getName().getLocalPart();
+    }
+
+    private boolean isTag(XMLEvent event) {
+        return "post_tag".equals(event.asStartElement().getAttributeByName(new QName("domain")).getValue());
+    }
+
+
+    private Date parsePubDate(XMLEventReader eventReader) throws XMLStreamException {
+        Date publishingDate = null;
+        try {
+            String pubDate = eventReader.nextEvent().asCharacters().getData();
+            pubDate = extractDate(pubDate);
+            SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy");
+            publishingDate = format.parse(pubDate);
+        } catch (ParseException e) {
+            throw new IllegalStateException("Could not parse pubDate: " + e.getMessage());
+        }
+        return publishingDate;
+    }
+
+    private String extractDate(String pubDate) {
+        //Date is supplied as this: Wed, 30 Nov -0001 00:00:00 +0000, we need to extract just the date
+        pubDate = pubDate.substring(pubDate.indexOf(",")+2);
+        int hourIndex = pubDate.indexOf(":")-3;
+        pubDate = pubDate.substring(0, hourIndex);
+        return pubDate;
+    }
+
+    private XMLEventReader getEventReader() {
+        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+        InputStream in = null;
+        XMLEventReader eventReader = null;
+        try {
+            in = new FileInputStream(origin);
+            eventReader = inputFactory.createXMLEventReader(in);
+        } catch (FileNotFoundException e) {
+            throw new IllegalStateException("Could not find origin file: " + e.getMessage());
+        } catch (XMLStreamException e) {
+            throw new IllegalStateException("Could not read origin file: " + e.getMessage());
+        }
+        return eventReader;
+    }
+
+    private boolean existsOrigin(String origin) {
+        File originFile = new File(origin);
+        String path = originFile.getAbsolutePath();
+        return originFile.exists();
+    }
+```
+
+Lo del parseo de la fecha ha sido un espectáculo... no he sido capaz de sacarlo con el DateFormatter para convertirlo a un LocalDate.
+Bueno, pues ahora que lo tengo... ¿no tendría más sentido que todo eso fuera a una clase propia? Digamos WpReader. Pues sí, porque ahora mismo mi clase principal se esta responsabilizando de saber como se leen los posts y qué hacer con los posts leidos, así que es mucho más claro hacerlo con una colaboradora.
+Pero claro, si me llevo la lógica aparte, ¿cómo aviso de que se puede escribir un nuevo post sin romper el while que itera sobre todos los elementos del XML?
+Bueno, pues finamente diría que voy a usar un patrón observador, para notificar de cuando hay un nuevo post. Técnicamente lo que voy a hacer es implementar un callback y así _Wp2JBake_ queda mucho más clara:
+
+```prettyprint
+public class Wp2JBake {
+
+    private WpReader wpReader;
+
+    private MdWriter mdWriter;
+
+    private HashSet<File> exportResult;
+
+    public Wp2JBake(String origin, String destination) {
+        this.wpReader = new WpReader(origin);
+        this.mdWriter = new MdWriter(destination);
+    }
+
+    public Set<File> generateJBakeMarkdown() {
+        exportResult = new HashSet<>();
+        wpReader.readPosts(this);
+        return exportResult;
+    }
+
+    public void postRead(Post post) {
+        exportResult.add(mdWriter.write(post));
+    }
+}
+```
+
+Y por otro lado tenemos _WpReader_:
+
+```prettyprint
+public class WpReader {
+
+    public static final String ITEM = "item";
+    public static final String TITLE = "title";
+    public static final String PUB_DATE = "pubDate";
+    public static final String CATEGORY = "category";
+    public static final String CONTENT = "contentencoded";
+    public static final String POST_TAG = "post_tag";
+    public static final String DOMAIN = "domain";
+    private String origin;
+
+    public WpReader(String origin) {
+        if (StringUtils.isEmpty(origin) || !existsOrigin(origin)) {
+            throw new IllegalArgumentException("Origin is not a valid file");
+        } else {
+            this.origin = origin;
+        }
+    }
+
+    private boolean existsOrigin(String origin) {
+        File originFile = new File(origin);
+        return originFile.exists();
+    }
+
+    public void readPosts(Wp2JBake wp2JBake) {
+        XMLEventReader eventReader = getEventReader();
+        try {
+            readXML(wp2JBake, eventReader);
+        } catch (XMLStreamException e) {
+            throw new IllegalStateException("Error reading XML " + origin + ": " + e.getMessage());
+        }
+    }
+
+    private void readXML(Wp2JBake wp2JBake, XMLEventReader eventReader) throws XMLStreamException {
+        while (eventReader.hasNext()) {
+            readElement(wp2JBake, eventReader);
+        }
+    }
+
+    private void readElement(Wp2JBake wp2JBake, XMLEventReader eventReader) throws XMLStreamException {
+        XMLEvent event = eventReader.nextEvent();
+        if (isPostStart(event)) {
+            Post post = readPost(eventReader);
+            wp2JBake.postRead(post);
+        }
+    }
+
+    private Post readPost(XMLEventReader eventReader) throws XMLStreamException {
+        Post exportedPost = new Post();
+        boolean postRead = false;
+        while (!postRead && eventReader.hasNext()) {
+            XMLEvent event = eventReader.nextEvent();
+            if (event.isStartElement()) {
+                exportedPost = loadAttribute(event, eventReader, exportedPost);
+            } else if (isPostEnd(event)) {
+                postRead = true;
+            }
+        }
+        return exportedPost;
+    }
+
+    private boolean isPostEnd(XMLEvent event) {
+        return event.isEndElement() && ITEM.equals(event.asEndElement().getName().getPrefix() + event.asEndElement().getName().getLocalPart());
+    }
+
+    private Post loadAttribute(XMLEvent event, XMLEventReader eventReader, Post post) {
+        String name = getEventFullName(event);
+        try {
+            post = loadAttribute(event, eventReader, post, name);
+        } catch (XMLStreamException e) {
+            throw new IllegalStateException("Error parsing " + name + ": " + e.getMessage());
+        }
+        return post;
+    }
+
+    private Post loadAttribute(XMLEvent event, XMLEventReader eventReader, Post post, String name) throws XMLStreamException {
+        switch (name) {
+            case TITLE:
+                post = loadTitle(eventReader, post);
+                break;
+            case PUB_DATE:
+                post = loadPublishingDate(eventReader, post);
+                break;
+            case CATEGORY:
+                if (isTag(event)) {
+                    post = loadCategory(eventReader, post);
+                }
+                break;
+            case CONTENT:
+                post = loadContent(eventReader, post);
+                break;
+            default:
+                break;
+        }
+        return post;
+    }
+
+    private Post loadContent(XMLEventReader eventReader, Post post) throws XMLStreamException {
+        return post.withContent(eventReader.nextEvent().asCharacters().getData());
+    }
+
+    private Post loadCategory(XMLEventReader eventReader, Post post) throws XMLStreamException {
+        return post.withTag(eventReader.nextEvent().asCharacters().getData());
+    }
+
+    private Post loadPublishingDate(XMLEventReader eventReader, Post post) throws XMLStreamException {
+        return post.withPublishingDate(parsePubDate(eventReader));
+    }
+
+    private Post loadTitle(XMLEventReader eventReader, Post post) throws XMLStreamException {
+        return post.withTitle(eventReader.nextEvent().asCharacters().getData());
+    }
+
+    private boolean isTag(XMLEvent event) {
+        return POST_TAG.equals(event.asStartElement().getAttributeByName(new QName(DOMAIN)).getValue());
+    }
+
+
+    private Date parsePubDate(XMLEventReader eventReader) throws XMLStreamException {
+        Date publishingDate = null;
+        try {
+            String pubDate = eventReader.nextEvent().asCharacters().getData();
+            pubDate = extractDate(pubDate);
+            SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy");
+            publishingDate = format.parse(pubDate);
+        } catch (ParseException e) {
+            throw new IllegalStateException("Could not parse pubDate: " + e.getMessage());
+        }
+        return publishingDate;
+    }
+
+    private String extractDate(String pubDate) {
+        //Date is supplied as this: Wed, 30 Nov -0001 00:00:00 +0000 (RFC822 presumably), we need to extract just the date
+        pubDate = pubDate.substring(pubDate.indexOf(",")+2);
+        int hourIndex = pubDate.indexOf(":")-3;
+        pubDate = pubDate.substring(0, hourIndex);
+        return pubDate;
+    }
+
+    private boolean isPostStart(XMLEvent event) {
+        return event.isStartElement() && ITEM.equals(getEventFullName(event));
+    }
+
+    private String getEventFullName(XMLEvent event) {
+        return event.asStartElement().getName().getPrefix() + event.asStartElement().getName().getLocalPart();
+    }
+
+    private XMLEventReader getEventReader() {
+        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+        InputStream in = null;
+        XMLEventReader eventReader = null;
+        try {
+            in = new FileInputStream(origin);
+            eventReader = inputFactory.createXMLEventReader(in);
+        } catch (FileNotFoundException e) {
+            throw new IllegalStateException("Could not find origin file: " + e.getMessage());
+        } catch (XMLStreamException e) {
+            throw new IllegalStateException("Could not read origin file: " + e.getMessage());
+        }
+        return eventReader;
+    }
+}
+```
+
+Pues para terminar con esta sección que se ha alargado más de lo que esperaba, me queda modificar los tests:
+
+```prettyprint
+@RunWith(MockitoJUnitRunner.class)
+public class WpReaderTest {
+
+    private WpReader sut;
+
+    @Mock
+    private Wp2JBake observer;
+
+    @Test(expected = IllegalArgumentException.class)
+    public void readerWithoutOrigin() {
+        sut = new WpReader(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void readerWithEmptyOrigin() {
+        sut = new WpReader("");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void buildWithInvalidOrigin() {
+        sut = new WpReader("foo");
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void readEmptyXML() {
+        sut = new WpReader("src/test/resources/empty.xml");
+        sut.readPosts(observer);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void readInvalidXML() {
+        sut = new WpReader("src/test/resources/invalid.xml");
+        sut.readPosts(observer);
+    }
+
+    @Test
+    public void readValidXML() {
+        sut = new WpReader("src/test/resources/wp-source.xml");
+        ArgumentCaptor<Post> postCapturer = ArgumentCaptor.forClass(Post.class);
+        sut.readPosts(observer);
+        verify(observer, times(7)).postRead(postCapturer.capture());
+    }
+}
+```
+
+Con esto ya ha quedado perfecto, si no tanto el software, si los tests. Cada clase tiene una responsabilidad bien definida y así se refleja en los tests. Eso sí, en esta última clase he tenido que meter Mockito para simular el _Wp2JBake_ que me hace falta para el callback. Lo bueno de esto es que con Mockito puedo verificar las llamadas a los métodos y por primera vez tengo todos los tests en verde.
+Eso sí, los tests de _Wp2JBake_ se han quedado en realidad como pruebas de integración, así que no me preocupa que el test original siga en rojo porque realmente hasta que no este implementada la escritura no debería pasar a verde :).
