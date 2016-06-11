@@ -4,7 +4,6 @@ type=post
 tags=Ruby on Rails
 status=published
 ~~~~~~
-
 En mi trabajo, uno de los proyectos en los que ando metido es la estandarización de proyectos de desarrollo Java en entorno web, a todos los niveles.
 
 A priori esto parece muy fácil y un trabajo bonito, pero el asunto se complica mucho cuando te das cuenta de la amplitud del trabajo:

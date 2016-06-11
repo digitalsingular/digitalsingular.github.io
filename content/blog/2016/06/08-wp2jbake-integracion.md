@@ -378,8 +378,22 @@ public class MdTranslator {
 
 Un detalle más revisando la documentación de [Markdown](https://daringfireball.net/projects/markdown/syntax#html), te recomiendan que los elementos a nivel de bloque vayan precedidos y sucedidos por una línea en blanco, eso significa más trabajo para el translator. En particular, tengo que tocar el tratamiento de los heading para añadirlo y además, procesar _<p>_, _<ul>_, _<ol>_, _<blockquote>_, _<table>_ y _<div>_. Hay algunos más pero creo que con eso ya voy cubierto, si no, cuestión de ir añadiendo más casos.
 
+Test:
 ```prettyprint
+@Test
+public void translateContentWithBlockElements() {
+    String translatedContent = sut.translateContent("<ul><li></li></ul><div><p></p></div>");
+    assertThat(translatedContent, is("\n<ul><li></li></ul>\n\n<div>\n<p></p>\n</div>\n"));
+}
 ```
 
+E implementación (me acabo de enterar de que con el replaceAll se pueden usar placeholders como el $0):
 ```prettyprint
+private String addNewLinesToBlockElements(String contentToTranslate) {
+    contentToTranslate = contentToTranslate.replaceAll("<p[^>]*>|<div[^>]*>|<ol[^>]*>|<ul[^>]*>|<blockquote[^>]*>|<table[^>]*>", "\n$0");
+    contentToTranslate = contentToTranslate.replaceAll("</p>|</div>|</ol>|</ul>|</blockquote>|</table>", "$0\n");
+    return contentToTranslate;
+}
 ```
+
+Y listo, se sacan las correspondientes constantes y listo.

@@ -55,6 +55,7 @@ public class DataBaseTest {
 Y eso es todo, para usar exactamente esta implementación también es conveniente tener log4j y el ojdbc14.jar.
 
 Referencias:
+
 <ol>
 	<li><a href="http://blogs.sun.com/randystuph/entry/injecting_jndi_datasources_for_junit">http://blogs.sun.com/randystuph/entry/injecting_jndi_datasources_for_junit</a></li>
 	<li><a href="http://www.coderanch.com/howto/java/CodeBarnLibrariesAndFrameworks">http://www.coderanch.com/how-to/java/CodeBarnLibrariesAndFrameworks</a></li>

@@ -1,7 +1,7 @@
 title=Logging en Java con SLF4J y Log4j2
 date=2013-09-02
 type=post
-tags=Java,log4j,logging,slf4j,tutorial
+tags=Java,Programación,Tools of the Trade,log4j,logging,slf4j,tutorial
 status=published
 ~~~~~~
 En este artículo se hace una breve introducción a la generación de logs en Java usando SLF4J y Log4j2, así como un breve repaso de las mejores prácticas relativas.
@@ -100,7 +100,9 @@ Como se ve la invocación al logger es en todo caso la misma, variando solo seg�
 En otros frameworks existe un nivel adicional de log: Fatal, pero SLF4J no lo recoge, he <a title="SLF4J y nivel de log Fatal" href="http://www.slf4j.org/faq.html#fatal">aquí</a> la explicación. Yo personalmente creo que puedo vivir sin ello.
 El objeto de cualquier framework de logging es que podamos configurar fácilmente cuales de estos mensajes se mostrarán según el entorno. Lo más normal es que en desarrollo deseemos mostrar los mensajes de debug y superiores, mientras que en producción se establezca el nivel a info (o incluso a error). Ahora bien, si hay un error en producción, lo más interesante es ajustar directamente el nivel de log a trace y así dispondríamos de toda la información relevante.
 Sin embargo, en el ejemplo pese a tener invocaciones a debug, a info y a trace, tan solo sale el mensaje relativo al error (que además se registra en la clase House). Esto es porque aún no hemos definido la configuración de los mensajes de log y por defecto log4j2 tan solo recoge los mensajes con nivel Error.
+
 <h5>Configuración de Log4j2</h5>
+
 En primer lugar, hay que decir que la configuración de log4j2 se realiza bien mediante un archivo xml, bien mediante un archivo json. En log4j 1.2 se podía configurar también mediante un archivo .properties, como a mí nunca me gustó esa opción (la veía confusa), agradezco que la hayan quitado.
 Lo primero es crear en main/resources un fichero log4j2.xml (tal y como se explica <a title="Configuración de Log4j2" href="http://logging.apache.org/log4j/2.x/manual/configuration.html#AutomaticConfiguration">aquí</a>), una vez creado, se completa tal que así:
 
@@ -211,6 +213,7 @@ Así de sencillo y de fácil. Por supuesto el método acepta múltiples parámet
 
 <h5>Código</h5>
 
+
 Pues con esto se acaba este pequeño repaso de lo fundamental sobre SLF4J y Log4j2, el código, en github (para variar).
 
-<a href="https://github.com/agustinventura/logging">GitHub</a>
+<a href="https://github.com/agustinventura/logging"><img title="Ejemplos de Logging en GitHub" src="/images/github_icon.png" alt="JustPlay en GitHub" width="115" height="115" /></a>
