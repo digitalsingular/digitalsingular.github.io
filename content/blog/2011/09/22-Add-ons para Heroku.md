@@ -46,7 +46,7 @@ Esta parte es tan sencilla como añadir al pom.xml esto:
 ```prettyprint linenums
 
 <dependency>
-         <groupId>redis.clients</groupId> 
+         <groupId>redis.clients</groupId>
          <artifactId>jedis</artifactId>
          <version>2.0.0</version>
 </dependency>
@@ -169,7 +169,7 @@ git push heroku  master
 Listo, con esto ya hago un heroku open y abro ticks.jsp, puedo ver que el comportamiento es exactamente igual que cuando ejecuto en local.
 
 <strong>Código en GitHub</strong>
-<a href="https://github.com/agustinventura/helloheroku/tree/b8c1b4a76276beae93be5d2f56ae28d78d94c78c"><img src="http://www.aguasnegras.es/blog/wp-content/uploads/2011/08/github_icon.png" alt="GitHub" title="GitHub" width="115" height="115" class="aligncenter size-full wp-image-255" /></a>
+<a href="https://github.com/agustinventura/helloheroku/tree/b8c1b4a76276beae93be5d2f56ae28d78d94c78c"><img src="/images/2011/08/github_icon.png" alt="GitHub" title="GitHub" width="115" height="115" class="aligncenter size-full wp-image-255" /></a>
 
 <strong>Conclusiones</strong>
 Añadir add-ons a Heroku es trivial, en general consiste en bajar la librería que proporciona la api y listo (teniendo instalado el servicio en local, claro).

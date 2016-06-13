@@ -104,4 +104,4 @@ Con ésto ya estan implementados los servicios del ciclo de vida, y ahora ya sol
 
 En GitHub (para variar):
 
-<a href="https://github.com/agustinventura/JustPlay"><img class="size-full wp-image-255" title="CrankPlayer en GitHub" src="http://aguasnegras.es/blog/wp-content/uploads/2011/08/github_icon.png" alt="CrankPlayer en GitHub" width="115" height="115" /></a> Repositorio de JustPlay en GitHub
+<a href="https://github.com/agustinventura/JustPlay"><img class="size-full wp-image-255" title="CrankPlayer en GitHub" src="/images/2011/08/github_icon.png" alt="CrankPlayer en GitHub" width="115" height="115" /></a> Repositorio de JustPlay en GitHub

@@ -16,6 +16,6 @@ Para redimensionar la ventana del emulador de android en Eclipse:
 
 Listo
 
-<a href="http://www.aguasnegras.es/blog/wp-content/uploads/2011/06/Pantallazo-Run-Configurations-.png"><img class="aligncenter size-medium wp-image-117" title="Parámetro scale emulador de Android" src="http://www.aguasnegras.es/blog/wp-content/uploads/2011/06/Pantallazo-Run-Configurations--300x238.png" alt="" width="300" height="238" /></a>
+<a href="/images/2011/06/Pantallazo-Run-Configurations-.png"><img class="aligncenter size-medium wp-image-117" title="Parámetro scale emulador de Android" src="/images/2011/06/Pantallazo-Run-Configurations--300x238.png" alt="" width="300" height="238" /></a>
 
 &nbsp;

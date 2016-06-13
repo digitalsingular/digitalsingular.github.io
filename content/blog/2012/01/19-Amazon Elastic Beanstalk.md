@@ -35,15 +35,15 @@ Entorno instalado, guay, sin mayor problema.
 
 Para crear un proyecto para desplegar en AWS, hago click en File &gt; New &gt; Other &gt; AWS &gt; AWS Java Web Project.
 
-<a href="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/1-Nuevo-Proyecto-AWS.png"><img class="size-medium wp-image-384" title="Nuevo Proyecto AWS" src="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/1-Nuevo-Proyecto-AWS-300x244.png" alt="Nuevo Proyecto AWS" width="300" height="244" /></a>
+<a href="/images/2012/01/1-Nuevo-Proyecto-AWS.png"><img class="size-medium wp-image-384" title="Nuevo Proyecto AWS" src="/images/2012/01/1-Nuevo-Proyecto-AWS-300x244.png" alt="Nuevo Proyecto AWS" width="300" height="244" /></a>
 
 Pulso Next. Para que un proyecto AWS sea desplegable necesita una información acerca de la cuenta del desarrollador, eso, junto con el nombre del proyecto es lo que tengo que configurar en esta pantalla. Como es la primera vez que entro, tengo que crear la cuenta, así que hago click en "Configure AWS Accounts" y veo la siguiente pantalla.
 
-<a href="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/2-AWS-Accounts.png"><img class="size-medium wp-image-385" title="Configurar cuenta de AWS" src="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/2-AWS-Accounts-300x248.png" alt="Configurar cuenta de AWS" width="300" height="248" /></a>
+<a href="/images/2012/01/2-AWS-Accounts.png"><img class="size-medium wp-image-385" title="Configurar cuenta de AWS" src="/images/2012/01/2-AWS-Accounts-300x248.png" alt="Configurar cuenta de AWS" width="300" height="248" /></a>
 
 Y ahí estan los datos de la cuenta, hay que ponerle un nombre de cuenta (meramente identificativo para el Eclipse), una clave de acceso y una clave secreta. Como no tengo ni idea de que es eso, hago click encima de "find your existing AWS security credentials" y una vez logado en la página de AWS veo una pantalla que haciendo scroll tiene esta pinta:
 
-<a href="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/3-Security-Credentials.png"><img class="size-medium wp-image-386" title="Credenciales de Seguridad" src="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/3-Security-Credentials-300x163.png" alt="Credenciales de Seguridad" width="300" height="163" /></a>
+<a href="/images/2012/01/3-Security-Credentials.png"><img class="size-medium wp-image-386" title="Credenciales de Seguridad" src="/images/2012/01/3-Security-Credentials-300x163.png" alt="Credenciales de Seguridad" width="300" height="163" /></a>
 
 Ahí (en el borrón) esta la clave de acceso y si hago click en "mostrar" veo la clave secreta. Pues nada, copiar y pegar a la ventana del Eclipse. Hago click en Ok y en la pantalla de configuración del proyecto dejo seleccionado "Basic Java Web Application". Finish.
 
@@ -51,7 +51,7 @@ Ahí (en el borrón) esta la clave de acceso y si hago click en "mostrar" veo la
 
 El proyecto recién creado es un proyecto web dinámico normal de Eclipse.
 
-<a href="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/4-Proyecto-recién-creado.png"><img class="size-medium wp-image-387" title="Proyecto Java Web AWS" src="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/4-Proyecto-recién-creado-300x163.png" alt="Proyecto Java Web AWS" width="300" height="163" /></a>
+<a href="/images/2012/01/4-Proyecto-recién-creado.png"><img class="size-medium wp-image-387" title="Proyecto Java Web AWS" src="/images/2012/01/4-Proyecto-recién-creado-300x163.png" alt="Proyecto Java Web AWS" width="300" height="163" /></a>
 
 Tiene una carpeta src/ en la que se encuentran los fuentes de Java, de momento vacía, una carpeta webcontent en la que va el contenido web de la aplicación (jsp, html, css, js, png, gif, etc...) y dentro de ella, como es habitual, una carpeta WEB-INF con el web.xml dentro y un directorio lib (también vacío).
 
@@ -63,7 +63,7 @@ De momento, el proyecto cumple lo prometido, Java Web normal y corriente. Ahora 
 
 Para ejecutar el proyecto, hago click encima de él con el botón derecho y selecciono Run As &gt; Run on Server... En esta pantalla dejo seleccionado "Manually define a new server" y selecciono un AWS Elastic Beanstalk for Tomcat 6. En "Server host name" escribo Tomcat6AWS y pulso Next.
 
-<a href="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/5-Run-on-Server.png"><img class="size-medium wp-image-388" title="Nuevo Tomcat 6 AWS" src="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/5-Run-on-Server-253x300.png" alt="Nuevo Tomcat 6 AWS" width="253" height="300" /></a>
+<a href="/images/2012/01/5-Run-on-Server.png"><img class="size-medium wp-image-388" title="Nuevo Tomcat 6 AWS" src="/images/2012/01/5-Run-on-Server-253x300.png" alt="Nuevo Tomcat 6 AWS" width="253" height="300" /></a>
 
 En la siguiente pantalla tengo que seleccionar para empezar una región en la que desplegar el proyecto. No sé si será un bug del plugin o que solo esta permitido ahí, pero solo me deja seleccionar US-East(Northern Virginia). Me hubiera gustado más seleccionar Europe(Ireland) por aquello del tiempo de latencia, pero bueno.
 
@@ -71,19 +71,19 @@ Lo siguiente son conceptos ya propios de Amazon Elastic Beanstalk. Una aplicaci�
 
 Pues vale, dejo marcado "Create a new application" y en Name pongo AWSJavaWeb. Para el Environment uso de nombre AWSJavaWeb igualmente.
 
-<a href="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/6-Application-y-Environment.png"><img class="size-medium wp-image-390" title="Application y Environment" src="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/6-Application-y-Environment-247x300.png" alt="Application y Environment" width="247" height="300" /></a>
+<a href="/images/2012/01/6-Application-y-Environment.png"><img class="size-medium wp-image-390" title="Application y Environment" src="/images/2012/01/6-Application-y-Environment-247x300.png" alt="Application y Environment" width="247" height="300" /></a>
 
 En la siguiente pantalla, Advanced Configuration, la verdad que no entiendo nada, parece que es algún sistema de autenticación (¿otro?), pero sigo el tutorial y selecciono "Deploy with a key pair" y le doy a Add (la cruz verde). Me sale un diálogo para introducir un nombre y un directorio, de nombre uso AWSJavaWeb y el directorio lo dejo tal y como esta. Pulso Ok y pulso Finish.
 
-<a href="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/7-Advanced-Configuration.png"><img class="size-medium wp-image-392" title="Advanced Configuration" src="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/7-Advanced-Configuration-247x300.png" alt="Advanced Configuration" width="247" height="300" /></a>
+<a href="/images/2012/01/7-Advanced-Configuration.png"><img class="size-medium wp-image-392" title="Advanced Configuration" src="/images/2012/01/7-Advanced-Configuration-247x300.png" alt="Advanced Configuration" width="247" height="300" /></a>
 
 Pero todavía sale un cuadro de diálogo más... pidiéndome la versión de la aplicación, claro. Escribo v20120118.01 (primera versión, 18 de Enero de 2012).
 
-<a href="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/8-Environment-Version.png"><img class="size-medium wp-image-394" title="Versión de la Aplicación" src="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/8-Environment-Version-300x115.png" alt="Versión de la Aplicación" width="300" height="115" /></a>
+<a href="/images/2012/01/8-Environment-Version.png"><img class="size-medium wp-image-394" title="Versión de la Aplicación" src="/images/2012/01/8-Environment-Version-300x115.png" alt="Versión de la Aplicación" width="300" height="115" /></a>
 
 Pulso OK y espero mientras el cuadro de diálogo me va informando. Entiendo que el proceso es generar un WAR, subirlo a Amazon S3, crear una instancia de Amazon EC2 con el Tomcat 6 y desplegarlo... nada más... Cuando acaba:
 
-<a href="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/9-Resultado.png"><img class="size-medium wp-image-396" title="Aplicación desplegada en Elastic Beanstalk" src="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/9-Resultado-300x163.png" alt="Aplicación desplegada en Elastic Beanstalk" width="300" height="163" /></a>
+<a href="/images/2012/01/9-Resultado.png"><img class="size-medium wp-image-396" title="Aplicación desplegada en Elastic Beanstalk" src="/images/2012/01/9-Resultado-300x163.png" alt="Aplicación desplegada en Elastic Beanstalk" width="300" height="163" /></a>
 
 <strong>Paso 5</strong>
 
@@ -93,7 +93,7 @@ Guardo los cambios, click con el botón derecho en el proyecto, Run As &gt; Run 
 
 Vuelvo a esperar (aunque menos) y...
 
-<a href="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/10-Cambios.png"><img class="size-medium wp-image-399" title="Cambios Desplegados" src="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/10-Cambios-300x163.png" alt="Cambios Desplegados" width="300" height="163" /></a>
+<a href="/images/2012/01/10-Cambios.png"><img class="size-medium wp-image-399" title="Cambios Desplegados" src="/images/2012/01/10-Cambios-300x163.png" alt="Cambios Desplegados" width="300" height="163" /></a>
 
 Ahí esta, cambios desplegados en producción.
 
@@ -103,7 +103,7 @@ Para evitar que el servidor siga funcionando (y por tanto, me facturen), lo teng
 
 Y aquí me llevo la primera decepción, aunque tampoco es muy importante, tras 10 minutos esperando, decido entrar en la <a title="Consola de AWS" href="https://console.aws.amazon.com/s3/home" target="_blank">consola de aws</a> ya que me parece extraño. Entro, selecciono AWS Elastic Bean Stalk, la aplicación y al hacer click en Events, veo que ya se ha parado... hace 10 minutos. Vaya, que el plugin se ha quedado colgado, habrá que reportarlo.
 
-<a href="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/11-Consola-AWS.png"><img class="size-medium wp-image-400" title="Consola AWS" src="http://www.aguasnegras.es/blog/wp-content/uploads/2012/01/11-Consola-AWS-300x149.png" alt="Consola AWS" width="300" height="149" /></a>
+<a href="/images/2012/01/11-Consola-AWS.png"><img class="size-medium wp-image-400" title="Consola AWS" src="/images/2012/01/11-Consola-AWS-300x149.png" alt="Consola AWS" width="300" height="149" /></a>
 
 <strong>Conclusiones</strong>
 

@@ -253,7 +253,7 @@ SHARED_DATABASE_URL => postgres://tpqbfpkzqb:OILC1r62mtQ5YkqKTeA7@ec2-107-20-227
 
 <strong>Código en GitHub</strong>
 
-<strong><a href="https://github.com/agustinventura/helloheroku/tree/cd3c58faf1ceaf0905b390f41f2f51088ca3724b"><img class="aligncenter size-full wp-image-255" title="GitHub" src="http://www.aguasnegras.es/blog/wp-content/uploads/2011/08/github_icon.png" alt="GitHub" width="115" height="115" /></a>
+<strong><a href="https://github.com/agustinventura/helloheroku/tree/cd3c58faf1ceaf0905b390f41f2f51088ca3724b"><img class="aligncenter size-full wp-image-255" title="GitHub" src="/images/2011/08/github_icon.png" alt="GitHub" width="115" height="115" /></a>
 </strong>
 
 <strong>Conclusiones</strong>

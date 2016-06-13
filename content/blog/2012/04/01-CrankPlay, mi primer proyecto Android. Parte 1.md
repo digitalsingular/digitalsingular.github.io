@@ -34,7 +34,7 @@ El primer paso es sencillo, creo el proyecto, inicializo git, creo repositorio e
 
 Resultado, ya esta el proyecto en GitHub:
 
-<a href="https://github.com/agustinventura/CrankPlay"><img class="size-full wp-image-255" title="CrankPlay en GitHub" src="http://www.aguasnegras.es/blog/wp-content/uploads/2011/08/github_icon.png" alt="CrankPlay en GitHub" width="115" height="115" /></a>
+<a href="https://github.com/agustinventura/CrankPlay"><img class="size-full wp-image-255" title="CrankPlay en GitHub" src="/images/2011/08/github_icon.png" alt="CrankPlay en GitHub" width="115" height="115" /></a>
 
 Ahora toca empezar con el tutorial de MusicDroid.
 

@@ -104,4 +104,4 @@ Y todo correcto, funcionando a la primera.
 
 Como de costumbre, el código esta en GitHub:
 
-<a href="https://github.com/agustinventura/JustPlay"><img class="size-full wp-image-255" title="JustPlay en GitHub" src="http://aguasnegras.es/blog/wp-content/uploads/2011/08/github_icon.png" alt="JustPlay en GitHub" width="115" height="115" /></a>
+<a href="https://github.com/agustinventura/JustPlay"><img class="size-full wp-image-255" title="JustPlay en GitHub" src="/images/2011/08/github_icon.png" alt="JustPlay en GitHub" width="115" height="115" /></a>

@@ -88,7 +88,7 @@ Ahora cambio el scope de servlet-api de provided a compile. Si se usa Tomcat, To
 Siguiente paso, añadir el plugin appassembler para que genere el script con el que arrancar la aplicación:
 
 ```prettyprint linenums
-			
+
 
 <plugin>
 			<groupId>org.codehaus.mojo</groupId>
@@ -96,15 +96,15 @@ Siguiente paso, añadir el plugin appassembler para que genere el script con el 
 			<version>1.1.1</version>
 			<executions>
 				<execution>
-					
+
 <phase>package</phase>
 					<goals><goal>assemble</goal></goals>
 					<configuration>
 						<assembleDirectory>target</assembleDirectory>
 						<extraJvmArguments>-Xmx512m</extraJvmArguments>
-						
+
 <programs>
-							
+
 <program>
 								<mainClass>com.springsource.petclinic.PetclinicMain</mainClass>
 								<name>webapp</name>
@@ -188,7 +188,7 @@ Y listo, funcionando!
 
 <strong>Código en GitHub</strong>
 
-<strong><a href="https://github.com/agustinventura/Petclinic-con-Spring-Roo-en-Heroku"><img class="aligncenter size-full wp-image-255" title="GitHub" src="http://www.aguasnegras.es/blog/wp-content/uploads/2011/08/github_icon.png" alt="GitHub" width="115" height="115" /></a>
+<strong><a href="https://github.com/agustinventura/Petclinic-con-Spring-Roo-en-Heroku"><img class="aligncenter size-full wp-image-255" title="GitHub" src="/images/2011/08/github_icon.png" alt="GitHub" width="115" height="115" /></a>
 </strong>
 
 <strong>Conclusiones</strong>

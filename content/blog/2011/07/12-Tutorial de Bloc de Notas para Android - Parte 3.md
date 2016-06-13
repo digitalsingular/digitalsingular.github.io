@@ -21,7 +21,7 @@ Primero modifico la vista de presentación de cada nota, es decir, el notes_row.
 
 Y con esto ya tengo una primera aproximación:
 
-<a href="http://www.aguasnegras.es/blog/wp-content/uploads/2011/07/Pantallazo-5554android2.2.png"><img class="aligncenter size-medium wp-image-141" title="Pantallazo modificación propia del tutorial Notepad" src="http://www.aguasnegras.es/blog/wp-content/uploads/2011/07/Pantallazo-5554android2.2-300x278.png" alt="" width="300" height="278" /></a>Con lo cual ya se diferencia entre notas aunque tengan el mismo título.
+<a href="/images/2011/07/Pantallazo-5554android2.2.png"><img class="aligncenter size-medium wp-image-141" title="Pantallazo modificación propia del tutorial Notepad" src="/images/2011/07/Pantallazo-5554android2.2-300x278.png" alt="" width="300" height="278" /></a>Con lo cual ya se diferencia entre notas aunque tengan el mismo título.
 
 Bueno, <a title="Tutorial Notepad - Parte 2" href="http://developer.android.com/resources/tutorials/notepad/notepad-ex2.html">sigo con el tutorial</a>, creo un nuevo proyecto Android, from existing sources, etc... Listo. En esta parte del tutorial, se va a implementar la funcionalidad de edición de las notas (a través de un activity nuevo) y el borrado de las mismas a través del menú contextual.
 
