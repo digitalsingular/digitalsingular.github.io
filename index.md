@@ -1,5 +1,5 @@
 ---
-layout: none
+layout: post
 title: jekyll test
 ---
 # DigitalSingular
