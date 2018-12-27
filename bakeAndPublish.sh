@@ -9,4 +9,5 @@ cp -R output/* ../agustinventura.github.io/
 cd ../agustinventura.github.io/
 git add .
 git commit
+git pull
 git push origin master
