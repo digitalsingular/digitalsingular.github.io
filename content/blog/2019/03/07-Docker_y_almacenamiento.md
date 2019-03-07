@@ -28,7 +28,7 @@ docker container ls -s
 
 El contenedor ocupa apenas 471 Mb. Nada mal, ¿eh?
 
-![docker container ls -s](/images/2019/03/07/docker-image-ls.png)
+![docker container ls -s](/images/2019/03/07/docker-container-ls-s.png)
 
 Sin embargo, hay veces en que estamos limitados en espacio. Por ejemplo, yo tengo un SSD, compartido con Windows 10 (aunque no sé para qué si lo arranco de higos a brevas) y además en mi Ubuntu tengo dos particiones, una para / con 28 Gb y otra para /home con 59 Gb.
 
