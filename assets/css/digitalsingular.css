@@ -1,7 +1,18 @@
+@font-face {
+    font-family: BlankaRegular;
+    src: url("/fonts/Blanka-Regular.otf") format("opentype");
+}
+
 .pageTitle {
   text-transform: uppercase;
   font-weight: 600;
+  font-family: BlankaRegular;
 }
+
+.social-icons {
+    margin:1.0933333333rem 0 .656rem 0
+}
+
 .social-link {
     padding-left: 20px;
 }
