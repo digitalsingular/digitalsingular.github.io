@@ -17,5 +17,7 @@
   </head>
   <body>
     <header>
-      	<#include "menu.ftl">
+        <#if (!(numberOfPages??) || (numberOfPages == 0))>
+          <#include "menu.ftl">
+        </#if>
     </header>

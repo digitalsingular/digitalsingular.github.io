@@ -3,10 +3,19 @@
     src: url("/fonts/Blanka-Regular.otf") format("opentype");
 }
 
+body {
+    font-family: 'Lora';
+}
+
 .pageTitle {
   text-transform: uppercase;
   font-weight: 600;
-  font-family: BlankaRegular;
+  font-family: 'BlankaRegular';
+}
+
+.index-title {
+    font-family: 'BlankaRegular';
+    font-size: 10vw;
 }
 
 .social-icons {
